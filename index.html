@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f3f4f6;
+            font-family: Arial, sans-serif;
+        }
+
+        .calculator {
+            width: 320px;
+            background: #222;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .display {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: right;
+            font-size: 2rem;
+            color: white;
+            background: #333;
+            border: none;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 1.5rem;
+            border: none;
+            background: #444;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:active {
+            background: #666;
+        }
+
+        .operator {
+            background: #f39c12;
+        }
+
+        .operator:active {
+            background: #e67e22;
+        }
+
+        .equals {
+            background: #2ecc71;
+            grid-column: span 2;
+        }
+
+        .equals:active {
+            background: #27ae60;
+        }
+
+        .clear {
+            background: #e74c3c;
+        }
+
+        .clear:active {
+            background: #c0392b;
+        }
+
+        .advanced {
+            background: #9b59b6;
+        }
+
+        .advanced:active {
+            background: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" class="display" id="display" disabled>
+    <div class="buttons">
+        <button onclick="clearDisplay()" class="clear">C</button>
+        <button onclick="appendToDisplay('Math.sqrt(')" class="advanced">√</button>
+        <button onclick="appendToDisplay('Math.pow(')" class="advanced">xʸ</button>
+        <button onclick="appendToDisplay('/')" class="operator">÷</button>
+
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('*')" class="operator">×</button>
+
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('-')" class="operator">−</button>
+
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="appendToDisplay('+')" class="operator">+</button>
+
+        <button onclick="appendToDisplay('0')">0</button>
+        <button onclick="appendToDisplay('.')">.</button>
+        <button onclick="calculate()" class="equals">=</button>
+        <button onclick="appendToDisplay('Math.PI')" class="advanced">π</button>
+
+        <button onclick="appendToDisplay('Math.sin(')" class="advanced">sin</button>
+        <button onclick="appendToDisplay('Math.cos(')" class="advanced">cos</button>
+        <button onclick="appendToDisplay('Math.tan(')" class="advanced">tan</button>
+        <button onclick="appendToDisplay('Math.log(')" class="advanced">ln</button>
+    </div>
+</div>
+
+<script>
+    const display = document.getElementById('display');
+
+    function appendToDisplay(value) {
+        display.value += value;
+    }
+
+    function clearDisplay() {
+        display.value = '';
+    }
+
+    function calculate() {
+        try {
+            display.value = eval(display.value);
+        } catch (error) {
+            alert('Invalid expression');
+            clearDisplay();
+        }
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if ((event.key >= '0' && event.key <= '9') || "+-*/().".includes(event.key)) {
+            appendToDisplay(event.key);
+        } else if (event.key === 'Enter') {
+            calculate();
+        } else if (event.key === 'Backspace') {
+            display.value = display.value.slice(0, -1);
+        } else if (event.key === 'Escape') {
+            clearDisplay();
+        }
+    });
+</script>
+
+</body>
+</html>
